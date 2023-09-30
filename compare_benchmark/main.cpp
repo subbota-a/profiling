@@ -7,6 +7,7 @@
 #include <memory>
 #include <random>
 #include <vector>
+#include <thread>
 
 #include "compare.h"
 #include <benchmark/benchmark.h>
@@ -65,18 +66,32 @@ DataSet Prepare(unsigned int L, unsigned int N) {
 
 void BM_compare1(benchmark::State &state) {
   auto ds = Prepare(state.range(0), state.range(1));
+  int counter = 0;
   for (auto _ : state) {
+    state.ResumeTiming();
     std::sort(ds.vs.begin(), ds.vs.end(), [&](const char *a, const char *b) {
+      ++counter;
       return compare1(a, b, state.range(0));
     });
+    state.PauseTiming();
+    ds = Prepare(state.range(0), state.range(1));
   }
+  benchmark::DoNotOptimize(counter);
 }
 
 void BM_compare2(benchmark::State &state) {
   auto ds = Prepare(state.range(0), state.range(1));
+  int counter = 0;
   for (auto _ : state) {
-    std::sort(ds.vs.begin(), ds.vs.end(), compare2);
+    state.ResumeTiming();
+    std::sort(ds.vs.begin(), ds.vs.end(), [&](const char *a, const char *b) {
+      ++counter;
+      return compare2(a, b);
+    });
+    state.PauseTiming();
+    ds = Prepare(state.range(0), state.range(1));
   }
+  benchmark::DoNotOptimize(counter);
 }
 
 BENCHMARK(BM_compare1)
@@ -94,5 +109,5 @@ BENCHMARK_MAIN();
 //  auto start = std::chrono::steady_clock::now();
 //  std::sort(ds.vs.begin(), ds.vs.end(), compare2);
 //  auto duration= std::chrono::steady_clock::now() - start;
-//  std::cout << duration;
+//  std::cout << std::chrono::duration_cast< std::chrono::duration<double, std::milli>>(duration).count() << "ms\n";
 //}
