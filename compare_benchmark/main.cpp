@@ -87,3 +87,12 @@ BENCHMARK(BM_compare2)
     ->Unit(benchmark::TimeUnit::kMillisecond);
 
 BENCHMARK_MAIN();
+
+//int main()
+//{
+//  auto ds = Prepare(1 << 18, 1 << 14);
+//  auto start = std::chrono::steady_clock::now();
+//  std::sort(ds.vs.begin(), ds.vs.end(), compare2);
+//  auto duration= std::chrono::steady_clock::now() - start;
+//  std::cout << duration;
+//}
