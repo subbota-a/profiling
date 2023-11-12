@@ -37,3 +37,5 @@ endif ()
 include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
 
 add_subdirectory(compare_benchmark)
+add_subdirectory(task1)
+add_subdirectory(SingleNumber)
