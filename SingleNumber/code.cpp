@@ -1,27 +1,11 @@
 #include "code.h"
+#include <array>
 
 using namespace std;
 
-int Solution1::singleNumber(vector<int> &nums) {
-  vector<int> one_counts(32, 0);
-  for (auto n : nums) {
-    for (int i = 0; i < 32; ++i) {
-      if (n & 0x1) {
-        one_counts[i]++;
-      }
-      n >>= 1;
-    }
-  }
-  int result = 0;
-  for (int i = 31; i >= 0; --i) {
-    result <<= 1;
-    result = result | ((one_counts[i] % 3 == 0) ? 0 : 1);
-  }
-  return result;
-}
-
 int Solution2::singleNumber(vector<int> &nums) {
-  vector<int> one_counts(32, 0);
+  array<int, 32> one_counts;
+  one_counts.fill(0);
 
   for (auto n : nums) {
     for (int i = 0; i < 32; ++i) {

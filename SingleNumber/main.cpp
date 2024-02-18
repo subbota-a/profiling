@@ -5242,16 +5242,6 @@ vector<int> data = {
     11522, 22058, 20230, 10404, 1285, 5568
 };
 
-void BM_compare1(benchmark::State& state)
-{
-  Solution1 s;
-  for (auto _ : state) {
-    if (50001 != s.singleNumber(::data)) {
-      abort();
-    }
-  }
-}
-
 void BM_compare2(benchmark::State& state)
 {
   Solution2 s;
@@ -5282,7 +5272,6 @@ void BM_compare4(benchmark::State& state)
   }
 }
 
-BENCHMARK(BM_compare1)->Unit(benchmark::TimeUnit::kMicrosecond);
 BENCHMARK(BM_compare2)->Unit(benchmark::TimeUnit::kMicrosecond);
 BENCHMARK(BM_compare3)->Unit(benchmark::TimeUnit::kMicrosecond);
 BENCHMARK(BM_compare4)->Unit(benchmark::TimeUnit::kMicrosecond);

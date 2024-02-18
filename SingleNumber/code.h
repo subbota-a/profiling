@@ -1,11 +1,6 @@
 #pragma once
 #include <vector>
 
-class Solution1 {
-public:
-  static int singleNumber(std::vector<int> &nums);
-};
-
 class Solution2 {
 public:
   static int singleNumber(std::vector<int> &nums);
